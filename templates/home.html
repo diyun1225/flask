@@ -1,5 +1,16 @@
-from flask import render_template
+<!DOCTYPE html>
+<html>
+    <head>
+    
+        <title>Flask</title>
+    </head>
+    <body>
+        {% for post in posts %} <!--讀取app.py裡的posts的資料-->
+            <h1>{{ post.title }}</h1>
+            <p>By{{post.author}} on {{ post.date_posted}}</p>
+            <p>{{ post.content }}</p>
+        {% endfor %}
 
-@app.route('/')
-def home():
-    return render_template('home.html')
+      
+    </body>
+</html>
