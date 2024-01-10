@@ -37,10 +37,10 @@ posts = [
     }
 ]
 
-UPLOAD_FOLDER = 'C:\Users\USER\Documents\GitHub\flask\file'
+UPLOAD_FOLDER = 'C:\\Users\\USER\\Documents\\GitHub\\flask\\file'
 ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
-app = Flask(__name__)
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB
 
