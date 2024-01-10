@@ -1,18 +1,18 @@
-{% extends "layout.html" %}
-{% block content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        {% if title %} <!--判斷資料庫是否有title這個值-->
+            <title>Flask Blog - {{ title }}</title>
+        {% else %}
+            <title>Flask Blog</title>
+        {% endif %}
+    </head>
+    <body>
         {% for post in posts %} <!--讀取app.py裡的posts的資料-->
-            <article class="media content-section">
-                <div class="media-body">
-                <div class="article-metadata">
-                    <a class="mr-2" href="#">{{ post.author }}</a>
-                    <small class="text-muted">{{ post.date_posted }}</small>
-                </div>
-                <h2><a class="article-title" href="#">{{ post.title }}</a></h2>
-                <p class="article-content">{{ post.content }}</p>
-                </div>
-            </article>
+            <h1>{{ post.title }}</h1>
+            <p>By{{post.author}} on {{ post.date_posted}}</p>
+            <p>{{ post.content }}</p>
         {% endfor %}
-{% endblock content %}
 
-      
-   
+    </body>
+</html>
