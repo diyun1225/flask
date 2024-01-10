@@ -1,6 +1,8 @@
-from flask import Flask, render_template, url_for, flash, redirect #載入flask
+from flask import Flask, render_template, url_for, flash, redirect,send_from_directory, request #載入flask
 from flask_sqlalchemy import SQLAlchemy
 from form import RegistrationForm,LoginForm
+from werkzeug.utils import secure_filename
+import os
 
 app = Flask(__name__) #建立 Application 物件
 
@@ -34,6 +36,37 @@ posts = [
         'date_posted':'april 28,2024'
     }
 ]
+
+UPLOAD_FOLDER = 'C:\Users\USER\Documents\GitHub\flask\file'
+ALLOWED_EXTENSIONS = set(['pdf', 'png', 'jpg', 'jpeg', 'gif'])
+
+app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+@app.route('/push', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], 
+                                   filename))
+            return redirect(url_for('uploaded_file',
+                                    filename=filename))
+    return '''
+    <!doctype html>
+    <title>Upload new File</title>
+    <h1>Upload new File</h1>
+    <form action="" method=post enctype=multipart/form-data>
+      <p><input type=file name=file>
+         <input type=submit value=Upload>
+    </form>
+    '''
 
 @app.route('/')
 @app.route('/home')
